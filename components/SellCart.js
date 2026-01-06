@@ -47,7 +47,7 @@ export default function SellCart() {
                 Carrito de Venta
             </h3>
 
-            <div className="space-y-3 mb-6">
+            <div className="space-y-3 mb-6 max-h-96 overflow-y-auto pr-2">
                 {sellCart.map((card) => (
                     <div
                         key={card.id}

@@ -53,7 +53,7 @@ export default function ShoppingCart() {
                 Carrito de Compra
             </h3>
 
-            <div className="space-y-3 mb-6">
+            <div className="space-y-3 mb-6 max-h-96 overflow-y-auto pr-2">
                 {cart.map((item) => (
                     <div
                         key={item.setCode}
