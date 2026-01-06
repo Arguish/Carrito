@@ -23,7 +23,6 @@ export default function BoosterOpener({ selectedSet, onClose }) {
         setOpening(true);
         buyBooster(boosterCost);
 
-        // Simular tiempo de apertura
         setTimeout(async () => {
             const boosterCards = await openBooster(selectedSet.code);
             setCards(boosterCards);

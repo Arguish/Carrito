@@ -26,7 +26,6 @@ export function GameProvider({ children }) {
     const [sellCart, setSellCart] = useState([]);
     const [mounted, setMounted] = useState(false);
 
-    // Cargar estado desde localStorage al montar
     useEffect(() => {
         setMounted(true);
         const saved = localStorage.getItem("magic-collection-storage");
@@ -46,7 +45,6 @@ export function GameProvider({ children }) {
         }
     }, []);
 
-    // Guardar estado en localStorage cuando cambia
     useEffect(() => {
         if (mounted) {
             const state = {
@@ -66,7 +64,6 @@ export function GameProvider({ children }) {
         }
     }, [euros, collection, cart, unopenedBoosters, sellCart, mounted]);
 
-    // Añadir carta a la colección
     const addCard = useCallback((card) => {
         setCollection((prev) => {
             const existing = prev.find((c) => c.id === card.id);
@@ -79,7 +76,6 @@ export function GameProvider({ children }) {
         });
     }, []);
 
-    // Añadir múltiples cartas (al abrir un sobre)
     const addCards = useCallback((cards) => {
         setCollection((prev) => {
             let newCollection = [...prev];
@@ -103,26 +99,21 @@ export function GameProvider({ children }) {
         });
     }, []);
 
-    // Añadir carta al carrito de venta
     const addToSellCart = useCallback(
         (card) => {
             setSellCart((prev) => {
                 const existingCard = prev.find((c) => c.id === card.id);
 
-                // Asegurar precio mínimo de 0.10€
                 let price = parseFloat(card.price);
                 if (isNaN(price) || price <= 0) {
                     price = 0.1;
                 }
 
-                // Verificar que la carta exista en la colección
                 const collectionCard = collection.find((c) => c.id === card.id);
                 if (!collectionCard) return prev;
 
-                // Verificar cuántas ya están en el carrito
                 const quantityInCart = existingCard ? existingCard.quantity : 0;
 
-                // No permitir agregar más de las que se tienen
                 if (quantityInCart >= collectionCard.quantity) return prev;
 
                 if (existingCard) {
@@ -139,12 +130,10 @@ export function GameProvider({ children }) {
         [collection]
     );
 
-    // Eliminar del carrito de venta
     const removeFromSellCart = useCallback((cardId) => {
         setSellCart((prev) => prev.filter((c) => c.id !== cardId));
     }, []);
 
-    // Actualizar cantidad en carrito de venta
     const updateSellCartQuantity = useCallback(
         (cardId, quantity) => {
             if (quantity <= 0) {
@@ -153,7 +142,6 @@ export function GameProvider({ children }) {
             }
 
             setSellCart((prev) => {
-                // Verificar límite de la colección
                 const collectionCard = collection.find((c) => c.id === cardId);
                 if (!collectionCard || quantity > collectionCard.quantity)
                     return prev;
@@ -166,14 +154,12 @@ export function GameProvider({ children }) {
         [collection, removeFromSellCart]
     );
 
-    // Confirmar venta del carrito
     const sellCartItems = useCallback(() => {
         const total = sellCart.reduce(
             (sum, item) => sum + item.price * item.quantity,
             0
         );
 
-        // Actualizar colección eliminando las cartas vendidas
         setCollection((prev) => {
             let newCollection = [...prev];
             sellCart.forEach((item) => {
@@ -194,12 +180,10 @@ export function GameProvider({ children }) {
         return { success: true, total };
     }, [sellCart]);
 
-    // Vaciar carrito de venta
     const clearSellCart = useCallback(() => {
         setSellCart([]);
     }, []);
 
-    // Añadir sobres al carrito
     const addToCart = useCallback((setInfo) => {
         setCart((prev) => {
             const existingItem = prev.find(
@@ -218,12 +202,10 @@ export function GameProvider({ children }) {
         });
     }, []);
 
-    // Eliminar del carrito
     const removeFromCart = useCallback((setCode) => {
         setCart((prev) => prev.filter((item) => item.setCode !== setCode));
     }, []);
 
-    // Actualizar cantidad en carrito
     const updateCartQuantity = useCallback(
         (setCode, quantity) => {
             if (quantity <= 0) {
@@ -240,7 +222,6 @@ export function GameProvider({ children }) {
         [removeFromCart]
     );
 
-    // Confirmar compra del carrito
     const checkoutCart = useCallback(() => {
         const total = cart.reduce(
             (sum, item) => sum + item.price * item.quantity,
@@ -251,7 +232,6 @@ export function GameProvider({ children }) {
             return { success: false, message: "No tienes suficientes euros" };
         }
 
-        // Crear sobres sin abrir
         const newBoosters = [];
         cart.forEach((item) => {
             for (let i = 0; i < item.quantity; i++) {
@@ -272,12 +252,10 @@ export function GameProvider({ children }) {
         return { success: true, message: "Compra realizada con éxito" };
     }, [cart, euros]);
 
-    // Abrir un sobre (eliminar del inventario)
     const openBoosterFromInventory = useCallback((boosterId) => {
         setUnopenedBoosters((prev) => prev.filter((b) => b.id !== boosterId));
     }, []);
 
-    // Resetear todo
     const reset = useCallback(() => {
         setEuros(50);
         setCollection([]);

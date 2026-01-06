@@ -1,19 +1,16 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-// Store para gestionar la colección, monedas y sobres
 export const useGameStore = create(
     persist(
         (set, get) => ({
-            // Estado inicial
-            euros: 50, // Euros iniciales para empezar
-            collection: [], // Array de cartas en la colección {id, name, image, rarity, set, quantity}
-            ownedSets: [], // Sets completados
-            cart: [], // Carrito de compra {setCode, setName, icon, quantity, price}
-            unopenedBoosters: [], // Sobres sin abrir {id, setCode, setName, icon}
-            sellCart: [], // Carrito de venta de cartas {id, name, image, rarity, quantity, price}
+            euros: 50,
+            collection: [],
+            ownedSets: [],
+            cart: [],
+            unopenedBoosters: [],
+            sellCart: [],
 
-            // Añadir carta a la colección
             addCard: (card) =>
                 set((state) => {
                     const existingCard = state.collection.find(
@@ -38,7 +35,6 @@ export const useGameStore = create(
                     };
                 }),
 
-            // Añadir múltiples cartas (al abrir un sobre)
             addCards: (cards) =>
                 set((state) => {
                     let newCollection = [...state.collection];
@@ -62,13 +58,11 @@ export const useGameStore = create(
                     return { collection: newCollection };
                 }),
 
-            // Vender una carta
             sellCard: (cardId) =>
                 set((state) => {
                     const card = state.collection.find((c) => c.id === cardId);
                     if (!card || card.quantity <= 0) return state;
 
-                    // Precio según rareza
                     const prices = {
                         common: 10,
                         uncommon: 25,
@@ -90,38 +84,32 @@ export const useGameStore = create(
                     };
                 }),
 
-            // Comprar un sobre
             buyBooster: (cost) =>
                 set((state) => {
                     if (state.coins < cost) return state;
                     return { coins: state.coins - cost };
                 }),
 
-            // Añadir carta al carrito de venta
             addToSellCart: (card) =>
                 set((state) => {
                     const existingCard = state.sellCart.find(
                         (c) => c.id === card.id
                     );
 
-                    // Asegurar precio mínimo de 0.10€
                     let price = parseFloat(card.price);
                     if (isNaN(price) || price <= 0) {
                         price = 0.1;
                     }
 
-                    // Verificar que la carta exista en la colección
                     const collectionCard = state.collection.find(
                         (c) => c.id === card.id
                     );
                     if (!collectionCard) return state;
 
-                    // Verificar cuántas ya están en el carrito
                     const quantityInCart = existingCard
                         ? existingCard.quantity
                         : 0;
 
-                    // No permitir agregar más de las que se tienen
                     if (quantityInCart >= collectionCard.quantity) return state;
 
                     if (existingCard) {
@@ -142,13 +130,11 @@ export const useGameStore = create(
                     };
                 }),
 
-            // Eliminar del carrito de venta
             removeFromSellCart: (cardId) =>
                 set((state) => ({
                     sellCart: state.sellCart.filter((c) => c.id !== cardId),
                 })),
 
-            // Actualizar cantidad en carrito de venta
             updateSellCartQuantity: (cardId, quantity) =>
                 set((state) => {
                     if (quantity <= 0) {
@@ -159,7 +145,6 @@ export const useGameStore = create(
                         };
                     }
 
-                    // Verificar límite de la colección
                     const collectionCard = state.collection.find(
                         (c) => c.id === cardId
                     );
@@ -173,7 +158,6 @@ export const useGameStore = create(
                     };
                 }),
 
-            // Confirmar venta del carrito
             sellCartItems: () =>
                 set((state) => {
                     const total = state.sellCart.reduce(
@@ -181,7 +165,6 @@ export const useGameStore = create(
                         0
                     );
 
-                    // Actualizar colección eliminando las cartas vendidas
                     let newCollection = [...state.collection];
                     state.sellCart.forEach((item) => {
                         newCollection = newCollection
@@ -203,13 +186,11 @@ export const useGameStore = create(
                     };
                 }),
 
-            // Vaciar carrito de venta
             clearSellCart: () =>
                 set({
                     sellCart: [],
                 }),
 
-            // Añadir sobres al carrito
             addToCart: (setInfo) =>
                 set((state) => {
                     const existingItem = state.cart.find(
@@ -234,13 +215,11 @@ export const useGameStore = create(
                     };
                 }),
 
-            // Eliminar del carrito
             removeFromCart: (setCode) =>
                 set((state) => ({
                     cart: state.cart.filter((item) => item.setCode !== setCode),
                 })),
 
-            // Actualizar cantidad en carrito
             updateCartQuantity: (setCode, quantity) =>
                 set((state) => {
                     if (quantity <= 0) {
@@ -259,7 +238,6 @@ export const useGameStore = create(
                     };
                 }),
 
-            // Confirmar compra del carrito
             checkoutCart: () =>
                 set((state) => {
                     const total = state.cart.reduce(
@@ -269,7 +247,6 @@ export const useGameStore = create(
 
                     if (state.euros < total) return state;
 
-                    // Crear sobres sin abrir
                     const newBoosters = [];
                     state.cart.forEach((item) => {
                         for (let i = 0; i < item.quantity; i++) {
@@ -293,7 +270,6 @@ export const useGameStore = create(
                     };
                 }),
 
-            // Abrir un sobre (eliminar del inventario)
             openBoosterFromInventory: (boosterId) =>
                 set((state) => ({
                     unopenedBoosters: state.unopenedBoosters.filter(
@@ -301,7 +277,6 @@ export const useGameStore = create(
                     ),
                 })),
 
-            // Resetear todo
             reset: () =>
                 set({
                     euros: 50,
@@ -314,7 +289,6 @@ export const useGameStore = create(
         }),
         {
             name: "magic-collection-storage",
-            // Opciones adicionales para asegurar la persistencia
             partialize: (state) => ({
                 euros: state.euros,
                 collection: state.collection,

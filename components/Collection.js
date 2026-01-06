@@ -8,39 +8,32 @@ export default function Collection() {
     const { collection, addToSellCart, sellCart } = useGame();
     const { addNotification } = useUI();
 
-    // useState para filtros y ordenamiento
-    const [sortBy, setSortBy] = useState("name"); // name, rarity, set
+    const [sortBy, setSortBy] = useState("name");
     const [filterRarity, setFilterRarity] = useState("all");
     const [searchTerm, setSearchTerm] = useState("");
-    const [selectedSet, setSelectedSet] = useState(null); // null = vista de expansiones
+    const [selectedSet, setSelectedSet] = useState(null);
 
-    // useMemo para ordenar y filtrar la colección
     const filteredAndSortedCollection = useMemo(() => {
         let filtered = [...collection];
 
-        // Filtrar cartas que están completamente en el carrito de venta
         filtered = filtered.filter((card) => {
             const cartItem = sellCart.find((item) => item.id === card.id);
-            // Si la carta está en el carrito y la cantidad en el carrito es igual a la cantidad en la colección, no mostrarla
             if (cartItem && cartItem.quantity >= card.quantity) {
                 return false;
             }
             return true;
         });
 
-        // Filtrar por rareza
         if (filterRarity !== "all") {
             filtered = filtered.filter((card) => card.rarity === filterRarity);
         }
 
-        // Filtrar por búsqueda
         if (searchTerm) {
             filtered = filtered.filter((card) =>
                 card.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
 
-        // Ordenar
         filtered.sort((a, b) => {
             switch (sortBy) {
                 case "name":
@@ -65,11 +58,9 @@ export default function Collection() {
         return filtered;
     }, [collection, sortBy, filterRarity, searchTerm, sellCart]);
 
-    // useMemo para obtener estadísticas de expansiones
     const setStats = useMemo(() => {
         const stats = {};
 
-        // Agrupar todas las cartas de la colección por expansión
         collection.forEach((card) => {
             if (!stats[card.set]) {
                 stats[card.set] = {
@@ -86,7 +77,6 @@ export default function Collection() {
             stats[card.set].ownedCards.add(card.id);
         });
 
-        // Convertir Set a count
         Object.values(stats).forEach((stat) => {
             stat.ownedCount = stat.ownedCards.size;
             stat.percentage =
@@ -99,7 +89,6 @@ export default function Collection() {
         return stats;
     }, [collection]);
 
-    // useMemo para estadísticas
     const stats = useMemo(() => {
         return {
             total: collection.reduce((acc, card) => acc + card.quantity, 0),
@@ -117,13 +106,13 @@ export default function Collection() {
 
     const handleSelectSet = (setCode) => {
         setSelectedSet(setCode);
-        setSearchTerm(""); // Limpiar búsqueda al cambiar a vista de cartas
+        setSearchTerm("");
     };
 
     const handleBackToSets = () => {
         setSelectedSet(null);
-        setSearchTerm(""); // Limpiar búsqueda al volver a expansiones
-        setFilterRarity("all"); // Resetear filtro de rareza
+        setSearchTerm("");
+        setFilterRarity("all");
     };
 
     if (collection.length === 0) {
@@ -141,7 +130,6 @@ export default function Collection() {
 
     return (
         <div className="space-y-6">
-            {/* Estadísticas */}
             <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
                 <div className="bg-magic-gray p-4 rounded-lg text-center">
                     <div className="text-2xl font-bold text-magic-gold">
@@ -181,10 +169,8 @@ export default function Collection() {
                 </div>
             </div>
 
-            {/* Vista de selección de expansiones */}
             {selectedSet === null && (
                 <>
-                    {/* Filtros y búsqueda */}
                     <div className="flex flex-col md:flex-row gap-4">
                         <input
                             type="text"
@@ -195,7 +181,6 @@ export default function Collection() {
                         />
                     </div>
 
-                    {/* Grid de expansiones */}
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {Object.entries(setStats)
                             .filter(([code, stat]) =>
@@ -265,7 +250,6 @@ export default function Collection() {
                 </>
             )}
 
-            {/* Vista de cartas de una expansión específica */}
             {selectedSet !== null && (
                 <>
                     <div className="flex items-center gap-4 mb-4">
@@ -294,7 +278,6 @@ export default function Collection() {
                         </div>
                     </div>
 
-                    {/* Filtros */}
                     <div className="flex flex-col md:flex-row gap-4">
                         <input
                             type="text"
@@ -329,7 +312,6 @@ export default function Collection() {
                         </select>
                     </div>
 
-                    {/* Grid de cartas */}
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                         {filteredAndSortedCollection
                             .filter((card) => card.set === selectedSet)

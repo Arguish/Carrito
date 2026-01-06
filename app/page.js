@@ -18,12 +18,11 @@ export default function Home() {
         reset,
         clearSellCart,
     } = useGame();
-    const [activeTab, setActiveTab] = useState("shop"); // shop, boosters, collection
+    const [activeTab, setActiveTab] = useState("shop");
 
     const totalCards = collection.reduce((acc, card) => acc + card.quantity, 0);
 
     const handleTabChange = (tab) => {
-        // Vaciar carrito de venta al cambiar de pestaña
         if (activeTab === "collection" && tab !== "collection") {
             clearSellCart();
         }
@@ -34,7 +33,6 @@ export default function Home() {
         <main className="min-h-screen bg-magic-black">
             <Notifications />
 
-            {/* Header */}
             <header className="bg-magic-dark border-b border-magic-gray shadow-xl">
                 <div className="max-w-7xl mx-auto px-4 py-6">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
@@ -105,7 +103,6 @@ export default function Home() {
                 </div>
             </header>
 
-            {/* Navigation */}
             <nav className="bg-magic-dark border-b border-magic-gray">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="flex gap-2">
@@ -148,7 +145,6 @@ export default function Home() {
                 </div>
             </nav>
 
-            {/* Content */}
             <div className="max-w-7xl mx-auto px-4 py-8">
                 {activeTab === "shop" && (
                     <div>

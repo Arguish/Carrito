@@ -13,7 +13,6 @@ export default function SetSelector() {
     const { addToCart } = useGame();
     const { addNotification } = useUI();
 
-    // useEffect para cargar los sets al montar el componente
     useEffect(() => {
         async function loadSets() {
             try {
@@ -27,7 +26,6 @@ export default function SetSelector() {
                         "No se pudieron cargar los sets. Intenta de nuevo."
                     );
                 } else {
-                    // Ordenar por fecha de lanzamiento (más recientes primero)
                     const sorted = data.sort(
                         (a, b) =>
                             new Date(b.released_at) - new Date(a.released_at)
