@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useGameStore } from "@/store/gameStore";
+import { useGame } from "@/context/GameContext";
 import Collection from "@/components/Collection";
 import SetSelector from "@/components/SetSelector";
 import ShoppingCart from "@/components/ShoppingCart";
@@ -17,7 +17,7 @@ export default function Home() {
         unopenedBoosters,
         reset,
         clearSellCart,
-    } = useGameStore();
+    } = useGame();
     const [activeTab, setActiveTab] = useState("shop"); // shop, boosters, collection
 
     const totalCards = collection.reduce((acc, card) => acc + card.quantity, 0);

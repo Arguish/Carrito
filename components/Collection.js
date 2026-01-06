@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useGameStore } from "@/store/gameStore";
+import { useGame } from "@/context/GameContext";
 import { useUI } from "@/context/UIContext";
 
 export default function Collection() {
-    const { collection, addToSellCart, sellCart } = useGameStore();
+    const { collection, addToSellCart, sellCart } = useGame();
     const { addNotification } = useUI();
 
     // useState para filtros y ordenamiento

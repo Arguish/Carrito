@@ -6,7 +6,7 @@ import { useUI } from "@/context/UIContext";
 import { openBooster } from "@/lib/scryfall";
 
 export default function BoosterOpener({ selectedSet, onClose }) {
-    const { addCards, buyBooster, coins } = useGameStore();
+    const { addCards } = useGame();
     const { addNotification } = useUI();
     const [opening, setOpening] = useState(false);
     const [cards, setCards] = useState([]);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useGameStore } from "@/store/gameStore";
+import { useGame } from "@/context/GameContext";
 import { useUI } from "@/context/UIContext";
 
 export default function SellCart() {
@@ -10,7 +10,7 @@ export default function SellCart() {
         removeFromSellCart,
         updateSellCartQuantity,
         sellCartItems,
-    } = useGameStore();
+    } = useGame();
     const { addNotification } = useUI();
 
     const total = sellCart.reduce(

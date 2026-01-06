@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getSets } from "@/lib/scryfall";
-import { useGameStore } from "@/store/gameStore";
+import { useGame } from "@/context/GameContext";
 import { useUI } from "@/context/UIContext";
 
 export default function SetSelector() {
@@ -10,7 +10,7 @@ export default function SetSelector() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
-    const { addToCart } = useGameStore();
+    const { addToCart } = useGame();
     const { addNotification } = useUI();
 
     // useEffect para cargar los sets al montar el componente

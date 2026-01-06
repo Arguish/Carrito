@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useGameStore } from "@/store/gameStore";
+import { useGame } from "@/context/GameContext";
 import { openBooster } from "@/lib/scryfall";
 import { useUI } from "@/context/UIContext";
 
 export default function UnopenedBoosters() {
-    const { unopenedBoosters, addCards, openBoosterFromInventory } =
-        useGameStore();
+    const { unopenedBoosters, addCards, openBoosterFromInventory } = useGame();
     const { addNotification } = useUI();
     const [opening, setOpening] = useState(null);
     const [revealedCards, setRevealedCards] = useState([]);
