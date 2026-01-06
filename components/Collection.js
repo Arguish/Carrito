@@ -143,37 +143,37 @@ export default function Collection() {
         <div className="space-y-6">
             {/* Estadísticas */}
             <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
-                <div className="bg-magic-purple p-4 rounded-lg text-center">
+                <div className="bg-magic-gray p-4 rounded-lg text-center">
                     <div className="text-2xl font-bold text-magic-gold">
                         {stats.total}
                     </div>
                     <div className="text-sm text-gray-300">Total</div>
                 </div>
-                <div className="bg-magic-purple p-4 rounded-lg text-center">
-                    <div className="text-2xl font-bold text-magic-blue">
+                <div className="bg-magic-gray p-4 rounded-lg text-center">
+                    <div className="text-2xl font-bold text-magic-orange">
                         {stats.unique}
                     </div>
                     <div className="text-sm text-gray-300">Únicas</div>
                 </div>
-                <div className="bg-magic-purple p-4 rounded-lg text-center">
+                <div className="bg-magic-gray p-4 rounded-lg text-center">
                     <div className="text-2xl font-bold text-gray-400">
                         {stats.common}
                     </div>
                     <div className="text-sm text-gray-300">Comunes</div>
                 </div>
-                <div className="bg-magic-purple p-4 rounded-lg text-center">
+                <div className="bg-magic-gray p-4 rounded-lg text-center">
                     <div className="text-2xl font-bold text-green-400">
                         {stats.uncommon}
                     </div>
                     <div className="text-sm text-gray-300">Infrecuentes</div>
                 </div>
-                <div className="bg-magic-purple p-4 rounded-lg text-center">
+                <div className="bg-magic-gray p-4 rounded-lg text-center">
                     <div className="text-2xl font-bold text-yellow-400">
                         {stats.rare}
                     </div>
                     <div className="text-sm text-gray-300">Raras</div>
                 </div>
-                <div className="bg-magic-purple p-4 rounded-lg text-center">
+                <div className="bg-magic-gray p-4 rounded-lg text-center">
                     <div className="text-2xl font-bold text-red-400">
                         {stats.mythic}
                     </div>
@@ -191,7 +191,7 @@ export default function Collection() {
                             placeholder="Buscar expansión..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="flex-1 px-4 py-2 bg-magic-purple rounded-lg focus:outline-none focus:ring-2 focus:ring-magic-blue"
+                            className="flex-1 px-4 py-2 bg-magic-gray text-magic-white placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-magic-orange"
                         />
                     </div>
 
@@ -211,7 +211,7 @@ export default function Collection() {
                             .map(([setCode, stat]) => (
                                 <div
                                     key={setCode}
-                                    className="bg-magic-purple p-4 rounded-lg hover:ring-2 hover:ring-magic-blue transition-all cursor-pointer"
+                                    className="bg-magic-gray p-4 rounded-lg hover:ring-2 hover:ring-magic-orange transition-all cursor-pointer"
                                     onClick={() => handleSelectSet(setCode)}
                                 >
                                     <div className="flex items-center gap-3 mb-3">
@@ -271,7 +271,7 @@ export default function Collection() {
                     <div className="flex items-center gap-4 mb-4">
                         <button
                             onClick={handleBackToSets}
-                            className="bg-magic-purple hover:bg-magic-blue px-4 py-2 rounded-lg transition-colors"
+                            className="bg-magic-gray hover:bg-magic-light-gray px-4 py-2 rounded-lg transition-colors"
                         >
                             ← Volver a Expansiones
                         </button>
@@ -301,13 +301,13 @@ export default function Collection() {
                             placeholder="Buscar cartas..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="flex-1 px-4 py-2 bg-magic-purple rounded-lg focus:outline-none focus:ring-2 focus:ring-magic-blue"
+                            className="flex-1 px-4 py-2 bg-magic-gray text-magic-white placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-magic-orange"
                         />
 
                         <select
                             value={filterRarity}
                             onChange={(e) => setFilterRarity(e.target.value)}
-                            className="px-4 py-2 bg-magic-purple rounded-lg focus:outline-none focus:ring-2 focus:ring-magic-blue"
+                            className="px-4 py-2 bg-magic-gray text-magic-white rounded-lg focus:outline-none focus:ring-2 focus:ring-magic-orange"
                         >
                             <option value="all">Todas las rarezas</option>
                             <option value="common">Comunes</option>
@@ -319,7 +319,7 @@ export default function Collection() {
                         <select
                             value={sortBy}
                             onChange={(e) => setSortBy(e.target.value)}
-                            className="px-4 py-2 bg-magic-purple rounded-lg focus:outline-none focus:ring-2 focus:ring-magic-blue"
+                            className="px-4 py-2 bg-magic-gray text-magic-white rounded-lg focus:outline-none focus:ring-2 focus:ring-magic-orange"
                         >
                             <option value="name">Ordenar por nombre</option>
                             <option value="rarity">Ordenar por rareza</option>
@@ -343,7 +343,7 @@ export default function Collection() {
                                 return (
                                     <div
                                         key={card.id}
-                                        className="bg-magic-purple rounded-lg overflow-hidden hover:ring-2 hover:ring-magic-blue transition-all"
+                                        className="bg-magic-gray rounded-lg overflow-hidden hover:ring-2 hover:ring-magic-orange transition-all"
                                     >
                                         {card.image && (
                                             <img

@@ -3,5 +3,11 @@
 @tailwind utilities;
 
 body {
-    @apply bg-magic-black text-white;
+    @apply bg-magic-black text-magic-white antialiased;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+}
+
+* {
+    @apply transition-colors duration-200;
 }

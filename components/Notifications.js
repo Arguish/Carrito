@@ -15,7 +15,7 @@ export default function Notifications() {
                             ? "bg-green-600"
                             : notification.type === "error"
                             ? "bg-red-600"
-                            : "bg-magic-blue"
+                            : "bg-magic-orange"
                     }`}
                 >
                     <span>{notification.message}</span>

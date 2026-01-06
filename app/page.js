@@ -31,44 +31,44 @@ export default function Home() {
     };
 
     return (
-        <main className="min-h-screen bg-gradient-to-b from-magic-black to-gray-900">
+        <main className="min-h-screen bg-magic-black">
             <Notifications />
 
             {/* Header */}
-            <header className="bg-magic-black border-b border-magic-purple">
+            <header className="bg-magic-dark border-b border-magic-gray shadow-xl">
                 <div className="max-w-7xl mx-auto px-4 py-6">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <div>
-                            <h1 className="text-4xl font-bold text-magic-gold mb-2">
-                                🎴 Magic Collection
+                            <h1 className="text-4xl font-bold bg-gradient-to-r from-magic-gold to-magic-orange bg-clip-text text-transparent mb-2">
+                                MAGIC: THE GATHERING
                             </h1>
-                            <p className="text-gray-400">
-                                Abre sobres y completa tu colección
+                            <p className="text-gray-400 text-sm uppercase tracking-wider">
+                                Colección de Cartas
                             </p>
                         </div>
 
-                        <div className="flex gap-4 items-center">
-                            <div className="bg-magic-purple px-6 py-3 rounded-lg">
-                                <div className="text-sm text-gray-400">
+                        <div className="flex gap-3 items-center flex-wrap">
+                            <div className="bg-magic-gray px-5 py-2.5 rounded border border-magic-light-gray hover:border-magic-gold">
+                                <div className="text-xs text-gray-400 uppercase tracking-wider">
                                     Euros
                                 </div>
-                                <div className="text-2xl font-bold text-magic-gold">
+                                <div className="text-xl font-bold text-magic-gold">
                                     €{(euros || 50).toFixed(2)}
                                 </div>
                             </div>
-                            <div className="bg-magic-purple px-6 py-3 rounded-lg">
-                                <div className="text-sm text-gray-400">
+                            <div className="bg-magic-gray px-5 py-2.5 rounded border border-magic-light-gray hover:border-magic-gold">
+                                <div className="text-xs text-gray-400 uppercase tracking-wider">
                                     Cartas
                                 </div>
-                                <div className="text-2xl font-bold text-magic-blue">
+                                <div className="text-xl font-bold text-magic-white">
                                     {totalCards}
                                 </div>
                             </div>
-                            <div className="bg-magic-purple px-6 py-3 rounded-lg">
-                                <div className="text-sm text-gray-400">
+                            <div className="bg-magic-gray px-5 py-2.5 rounded border border-magic-light-gray hover:border-magic-gold">
+                                <div className="text-xs text-gray-400 uppercase tracking-wider">
                                     Carrito
                                 </div>
-                                <div className="text-2xl font-bold text-magic-gold">
+                                <div className="text-xl font-bold text-magic-orange">
                                     {cart.length > 0
                                         ? cart.reduce(
                                               (sum, item) =>
@@ -78,11 +78,11 @@ export default function Home() {
                                         : 0}
                                 </div>
                             </div>
-                            <div className="bg-magic-purple px-6 py-3 rounded-lg">
-                                <div className="text-sm text-gray-400">
+                            <div className="bg-magic-gray px-5 py-2.5 rounded border border-magic-light-gray hover:border-magic-gold">
+                                <div className="text-xs text-gray-400 uppercase tracking-wider">
                                     Sobres
                                 </div>
-                                <div className="text-2xl font-bold text-green-400">
+                                <div className="text-xl font-bold text-magic-orange">
                                     {unopenedBoosters.length}
                                 </div>
                             </div>
@@ -96,7 +96,7 @@ export default function Home() {
                                         reset();
                                     }
                                 }}
-                                className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm transition-colors"
+                                className="bg-magic-orange hover:bg-orange-600 px-4 py-2 rounded font-semibold text-sm uppercase tracking-wider"
                             >
                                 Reset
                             </button>
@@ -106,43 +106,43 @@ export default function Home() {
             </header>
 
             {/* Navigation */}
-            <nav className="bg-magic-purple border-b border-gray-700">
+            <nav className="bg-magic-dark border-b border-magic-gray">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="flex gap-4">
+                    <div className="flex gap-2">
                         <button
                             onClick={() => handleTabChange("shop")}
-                            className={`px-6 py-4 font-semibold transition-colors ${
+                            className={`px-8 py-4 font-semibold uppercase tracking-wider text-sm ${
                                 activeTab === "shop"
-                                    ? "text-magic-gold border-b-2 border-magic-gold"
-                                    : "text-gray-400 hover:text-white"
+                                    ? "text-magic-white bg-magic-gray border-b-2 border-magic-orange"
+                                    : "text-gray-400 hover:text-magic-white hover:bg-magic-gray"
                             }`}
                         >
-                            🛒 Tienda de Sobres
+                            Tienda
                         </button>
                         <button
                             onClick={() => handleTabChange("boosters")}
-                            className={`px-6 py-4 font-semibold transition-colors relative ${
+                            className={`px-8 py-4 font-semibold uppercase tracking-wider text-sm relative ${
                                 activeTab === "boosters"
-                                    ? "text-magic-gold border-b-2 border-magic-gold"
-                                    : "text-gray-400 hover:text-white"
+                                    ? "text-magic-white bg-magic-gray border-b-2 border-magic-orange"
+                                    : "text-gray-400 hover:text-magic-white hover:bg-magic-gray"
                             }`}
                         >
-                            🎴 Abrir Sobres
+                            Sobres
                             {unopenedBoosters.length > 0 && (
-                                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                <span className="absolute top-2 -right-1 bg-magic-orange text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
                                     {unopenedBoosters.length}
                                 </span>
                             )}
                         </button>
                         <button
                             onClick={() => handleTabChange("collection")}
-                            className={`px-6 py-4 font-semibold transition-colors ${
+                            className={`px-8 py-4 font-semibold uppercase tracking-wider text-sm ${
                                 activeTab === "collection"
-                                    ? "text-magic-gold border-b-2 border-magic-gold"
-                                    : "text-gray-400 hover:text-white"
+                                    ? "text-magic-white bg-magic-gray border-b-2 border-magic-orange"
+                                    : "text-gray-400 hover:text-magic-white hover:bg-magic-gray"
                             }`}
                         >
-                            📚 Mi Colección
+                            Colección
                         </button>
                     </div>
                 </div>
@@ -152,13 +152,13 @@ export default function Home() {
             <div className="max-w-7xl mx-auto px-4 py-8">
                 {activeTab === "shop" && (
                     <div>
-                        <div className="mb-6">
-                            <h2 className="text-2xl font-bold text-white mb-2">
+                        <div className="mb-8">
+                            <h2 className="text-3xl font-bold text-magic-white mb-2 uppercase tracking-wide">
                                 Selecciona una Expansión
                             </h2>
-                            <p className="text-gray-400">
-                                Cada sobre cuesta 200 monedas y contiene 15
-                                cartas aleatorias
+                            <p className="text-gray-400 text-sm">
+                                Cada sobre cuesta €5.00 y contiene cartas
+                                aleatorias de la expansión
                             </p>
                         </div>
                         <div className="grid md:grid-cols-3 gap-6">
@@ -174,13 +174,13 @@ export default function Home() {
 
                 {activeTab === "boosters" && (
                     <div>
-                        <div className="mb-6">
-                            <h2 className="text-2xl font-bold text-white mb-2">
+                        <div className="mb-8">
+                            <h2 className="text-3xl font-bold text-magic-white mb-2 uppercase tracking-wide">
                                 Sobres Sin Abrir
                             </h2>
-                            <p className="text-gray-400">
-                                Haz clic en un sobre para abrirlo y ver tus
-                                cartas
+                            <p className="text-gray-400 text-sm">
+                                Haz clic en un sobre para abrirlo y descubrir
+                                tus cartas
                             </p>
                         </div>
                         <UnopenedBoosters />
@@ -189,11 +189,11 @@ export default function Home() {
 
                 {activeTab === "collection" && (
                     <div>
-                        <div className="mb-6">
-                            <h2 className="text-2xl font-bold text-white mb-2">
+                        <div className="mb-8">
+                            <h2 className="text-3xl font-bold text-magic-white mb-2 uppercase tracking-wide">
                                 Tu Colección
                             </h2>
-                            <p className="text-gray-400">
+                            <p className="text-gray-400 text-sm">
                                 Añade cartas al carrito para venderlas
                             </p>
                         </div>

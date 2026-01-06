@@ -161,13 +161,13 @@ export default function BoosterOpener({ selectedSet, onClose }) {
                             <button
                                 onClick={handleOpenBooster}
                                 disabled={coins < boosterCost}
-                                className="bg-magic-blue hover:bg-blue-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold py-2 px-6 rounded-lg transition-colors"
+                                className="bg-magic-orange hover:bg-orange-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold py-2 px-6 rounded-lg transition-colors"
                             >
                                 Abrir otro ({boosterCost} 💰)
                             </button>
                             <button
                                 onClick={handleClose}
-                                className="bg-magic-purple hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+                                className="bg-magic-gray hover:bg-magic-light-gray text-white font-bold py-2 px-6 rounded-lg transition-colors"
                             >
                                 Cerrar
                             </button>

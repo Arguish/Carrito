@@ -143,7 +143,7 @@ export default function UnopenedBoosters() {
                 {Object.values(groupedBoosters).map((group) => (
                     <div
                         key={group.setCode}
-                        className="bg-magic-purple rounded-lg p-4"
+                        className="bg-magic-gray rounded-lg p-4"
                     >
                         <div className="flex items-center gap-3 mb-3">
                             {group.icon && (
@@ -235,7 +235,7 @@ export default function UnopenedBoosters() {
 
                         <button
                             onClick={handleCloseModal}
-                            className="mt-6 w-full bg-magic-purple hover:bg-gray-600 text-white font-bold py-3 rounded-lg transition-colors"
+                            className="mt-6 w-full bg-magic-gray hover:bg-magic-light-gray text-white font-bold py-3 rounded-lg transition-colors"
                         >
                             Cerrar
                         </button>
