@@ -6,7 +6,7 @@ import { useUI } from "@/context/UIContext";
 export default function SellCart() {
     const {
         sellCart,
-        coins,
+        euros = 50,
         removeFromSellCart,
         updateSellCartQuantity,
         sellCartItems,
@@ -25,7 +25,7 @@ export default function SellCart() {
         );
         sellCartItems();
         addNotification(
-            `¡Vendiste ${cardCount} cartas por ${total} monedas!`,
+            `¡Vendiste ${cardCount} cartas por €${total.toFixed(2)}!`,
             "success"
         );
     };
@@ -79,7 +79,7 @@ export default function SellCart() {
                                 {card.rarity}
                             </p>
                             <p className="text-sm text-gray-400">
-                                {card.price} monedas c/u
+                                €{card.price.toFixed(2)} c/u
                             </p>
                         </div>
 
@@ -113,9 +113,9 @@ export default function SellCart() {
 
                         <div className="text-right min-w-[80px]">
                             <p className="font-bold text-green-400">
-                                {card.price * card.quantity}
+                                €{(card.price * card.quantity).toFixed(2)}
                             </p>
-                            <p className="text-xs text-gray-400">monedas</p>
+                            <p className="text-xs text-gray-400">euros</p>
                         </div>
 
                         <button
@@ -134,14 +134,14 @@ export default function SellCart() {
                         Total a recibir:
                     </span>
                     <span className="text-2xl font-bold text-green-400">
-                        +{total} 💰
+                        +€{total.toFixed(2)}
                     </span>
                 </div>
 
                 <div className="flex justify-between items-center mb-4">
-                    <span className="text-sm text-gray-400">Tus monedas:</span>
+                    <span className="text-sm text-gray-400">Tus euros:</span>
                     <span className="font-bold text-magic-gold">
-                        {coins} 💰
+                        €{(euros || 50).toFixed(2)}
                     </span>
                 </div>
 

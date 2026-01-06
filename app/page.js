@@ -10,8 +10,14 @@ import UnopenedBoosters from "@/components/UnopenedBoosters";
 import Notifications from "@/components/Notifications";
 
 export default function Home() {
-    const { coins, collection, cart, unopenedBoosters, reset, clearSellCart } =
-        useGameStore();
+    const {
+        euros = 50,
+        collection,
+        cart,
+        unopenedBoosters,
+        reset,
+        clearSellCart,
+    } = useGameStore();
     const [activeTab, setActiveTab] = useState("shop"); // shop, boosters, collection
 
     const totalCards = collection.reduce((acc, card) => acc + card.quantity, 0);
@@ -44,10 +50,10 @@ export default function Home() {
                         <div className="flex gap-4 items-center">
                             <div className="bg-magic-purple px-6 py-3 rounded-lg">
                                 <div className="text-sm text-gray-400">
-                                    Monedas
+                                    Euros
                                 </div>
                                 <div className="text-2xl font-bold text-magic-gold">
-                                    {coins} 💰
+                                    €{(euros || 50).toFixed(2)}
                                 </div>
                             </div>
                             <div className="bg-magic-purple px-6 py-3 rounded-lg">

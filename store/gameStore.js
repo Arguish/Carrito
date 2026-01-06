@@ -6,7 +6,7 @@ export const useGameStore = create(
     persist(
         (set, get) => ({
             // Estado inicial
-            coins: 1000, // Monedas iniciales para empezar
+            euros: 50, // Euros iniciales para empezar
             collection: [], // Array de cartas en la colección {id, name, image, rarity, set, quantity}
             ownedSets: [], // Sets completados
             cart: [], // Carrito de compra {setCode, setName, icon, quantity, price}
@@ -104,15 +104,11 @@ export const useGameStore = create(
                         (c) => c.id === card.id
                     );
 
-                    // Precio según rareza
-                    const prices = {
-                        common: 10,
-                        uncommon: 25,
-                        rare: 100,
-                        mythic: 300,
-                    };
-
-                    const price = prices[card.rarity] || 10;
+                    // Asegurar precio mínimo de 0.10€
+                    let price = parseFloat(card.price);
+                    if (isNaN(price) || price <= 0) {
+                        price = 0.1;
+                    }
 
                     // Verificar que la carta exista en la colección
                     const collectionCard = state.collection.find(
@@ -201,7 +197,7 @@ export const useGameStore = create(
                     });
 
                     return {
-                        coins: state.coins + total,
+                        euros: state.euros + total,
                         collection: newCollection,
                         sellCart: [],
                     };
@@ -233,7 +229,7 @@ export const useGameStore = create(
                     return {
                         cart: [
                             ...state.cart,
-                            { ...setInfo, quantity: 1, price: 200 },
+                            { ...setInfo, quantity: 1, price: 5 },
                         ],
                     };
                 }),
@@ -271,7 +267,7 @@ export const useGameStore = create(
                         0
                     );
 
-                    if (state.coins < total) return state;
+                    if (state.euros < total) return state;
 
                     // Crear sobres sin abrir
                     const newBoosters = [];
@@ -288,7 +284,7 @@ export const useGameStore = create(
                     });
 
                     return {
-                        coins: state.coins - total,
+                        euros: state.euros - total,
                         cart: [],
                         unopenedBoosters: [
                             ...state.unopenedBoosters,
@@ -308,7 +304,7 @@ export const useGameStore = create(
             // Resetear todo
             reset: () =>
                 set({
-                    coins: 1000,
+                    euros: 50,
                     collection: [],
                     ownedSets: [],
                     cart: [],
@@ -320,7 +316,7 @@ export const useGameStore = create(
             name: "magic-collection-storage",
             // Opciones adicionales para asegurar la persistencia
             partialize: (state) => ({
-                coins: state.coins,
+                euros: state.euros,
                 collection: state.collection,
                 ownedSets: state.ownedSets,
                 cart: state.cart,

@@ -13,6 +13,7 @@ export default function UnopenedBoosters() {
     const [revealedCards, setRevealedCards] = useState([]);
     const [showCards, setShowCards] = useState(false);
     const [currentBoosterId, setCurrentBoosterId] = useState(null);
+    const [openingAll, setOpeningAll] = useState(false);
 
     const handleOpenBooster = async (booster) => {
         setOpening(booster.id);
@@ -42,6 +43,51 @@ export default function UnopenedBoosters() {
 
             setOpening(null);
         }, 2000);
+    };
+
+    const handleOpenAllBoosters = async () => {
+        setOpeningAll(true);
+        const allCards = [];
+
+        // Abrir todos los sobres
+        for (const booster of unopenedBoosters) {
+            const cards = await openBooster(booster.setCode, {
+                icon: booster.icon,
+                card_count: booster.card_count || 0,
+            });
+            allCards.push(...cards);
+        }
+
+        // Agregar todas las cartas a la colección
+        if (allCards.length > 0) {
+            addCards(allCards);
+            setRevealedCards(allCards);
+            setShowCards(true);
+
+            const mythics = allCards.filter((c) => c.rarity === "mythic");
+            const rares = allCards.filter((c) => c.rarity === "rare");
+
+            if (mythics.length > 0) {
+                addNotification(
+                    `¡${mythics.length} Mítica${
+                        mythics.length > 1 ? "s" : ""
+                    }!`,
+                    "success"
+                );
+            } else if (rares.length > 0) {
+                addNotification(
+                    `${rares.length} Rara${rares.length > 1 ? "s" : ""}`,
+                    "success"
+                );
+            }
+
+            // Eliminar todos los sobres después de mostrar el modal
+            unopenedBoosters.forEach((booster) => {
+                openBoosterFromInventory(booster.id);
+            });
+        }
+
+        setOpeningAll(false);
     };
 
     const handleCloseModal = () => {
@@ -79,6 +125,20 @@ export default function UnopenedBoosters() {
 
     return (
         <>
+            {unopenedBoosters.length > 1 && (
+                <div className="mb-6">
+                    <button
+                        onClick={handleOpenAllBoosters}
+                        disabled={openingAll}
+                        className="w-full bg-magic-gold hover:bg-yellow-500 disabled:bg-gray-600 text-magic-black font-bold py-3 rounded-lg transition-colors text-lg"
+                    >
+                        {openingAll
+                            ? "Abriendo todos..."
+                            : `Abrir Todos los Sobres (${unopenedBoosters.length})`}
+                    </button>
+                </div>
+            )}
+
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {Object.values(groupedBoosters).map((group) => (
                     <div

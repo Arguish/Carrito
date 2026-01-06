@@ -4,8 +4,13 @@ import { useGameStore } from "@/store/gameStore";
 import { useUI } from "@/context/UIContext";
 
 export default function ShoppingCart() {
-    const { cart, coins, removeFromCart, updateCartQuantity, checkoutCart } =
-        useGameStore();
+    const {
+        cart,
+        euros = 50,
+        removeFromCart,
+        updateCartQuantity,
+        checkoutCart,
+    } = useGameStore();
     const { addNotification } = useUI();
 
     const total = cart.reduce(
@@ -14,17 +19,19 @@ export default function ShoppingCart() {
     );
 
     const handleCheckout = () => {
-        if (coins < total) {
-            addNotification("No tienes suficientes monedas", "error");
+        if ((euros || 50) < total) {
+            addNotification("No tienes suficientes euros", "error");
             return;
         }
 
+        const totalBoosters = cart.reduce(
+            (sum, item) => sum + item.quantity,
+            0
+        );
+
         checkoutCart();
         addNotification(
-            `¡Compra realizada! ${cart.reduce(
-                (sum, item) => sum + item.quantity,
-                0
-            )} sobres añadidos`,
+            `¡Compra realizada! ${totalBoosters} sobres añadidos`,
             "success"
         );
     };
@@ -97,9 +104,9 @@ export default function ShoppingCart() {
 
                         <div className="text-right min-w-[80px]">
                             <p className="font-bold text-magic-gold">
-                                {item.price * item.quantity}
+                                €{(item.price * item.quantity).toFixed(2)}
                             </p>
-                            <p className="text-xs text-gray-400">monedas</p>
+                            <p className="text-xs text-gray-400">euros</p>
                         </div>
 
                         <button
@@ -116,28 +123,30 @@ export default function ShoppingCart() {
                 <div className="flex justify-between items-center mb-4">
                     <span className="text-lg font-semibold">Total:</span>
                     <span className="text-2xl font-bold text-magic-gold">
-                        {total} 💰
+                        €{total.toFixed(2)}
                     </span>
                 </div>
 
                 <div className="flex justify-between items-center mb-4">
-                    <span className="text-sm text-gray-400">Tus monedas:</span>
+                    <span className="text-sm text-gray-400">Tus euros:</span>
                     <span
                         className={`font-bold ${
-                            coins >= total ? "text-green-400" : "text-red-400"
+                            (euros || 50) >= total
+                                ? "text-green-400"
+                                : "text-red-400"
                         }`}
                     >
-                        {coins} 💰
+                        €{(euros || 50).toFixed(2)}
                     </span>
                 </div>
 
                 <button
                     onClick={handleCheckout}
-                    disabled={coins < total}
+                    disabled={(euros || 50) < total}
                     className="w-full bg-magic-gold hover:bg-yellow-500 disabled:bg-gray-600 disabled:cursor-not-allowed text-magic-black font-bold py-3 rounded-lg transition-colors"
                 >
-                    {coins < total
-                        ? "Monedas insuficientes"
+                    {(euros || 50) < total
+                        ? "Euros insuficientes"
                         : "Confirmar Compra"}
                 </button>
             </div>
