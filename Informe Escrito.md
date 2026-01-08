@@ -2,8 +2,7 @@
 
 ## Aplicación de Gestión de Colección de Cartas Magic: The Gathering
 
-**Autor:** Javier Hernandez Gonzalez  
-**Fecha:** 7 de enero de 2026
+**Autor:** Javier Hernandez Gonzalez
 
 ---
 
